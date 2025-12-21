@@ -1,20 +1,20 @@
-const list = document.getElementById("list");
+const list = document.getElementById("infi-list");
 
 let count = 1;
 
-// add initial 10 items
-for (let i = 0; i < 10; i++) {
+// add 2 items by default
+for (let i = 0; i < 2; i++) {
   const li = document.createElement("li");
-  li.innerText = "Item " + count++;
+  li.innerText = "Todo " + count++;
   list.appendChild(li);
 }
 
 // infinite scroll
-window.addEventListener("scroll", () => {
-  if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+list.addEventListener("scroll", () => {
+  if (list.scrollTop + list.clientHeight >= list.scrollHeight) {
     for (let i = 0; i < 2; i++) {
       const li = document.createElement("li");
-      li.innerText = "Item " + count++;
+      li.innerText = "Todo " + count++;
       list.appendChild(li);
     }
   }
