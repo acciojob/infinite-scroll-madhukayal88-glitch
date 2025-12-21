@@ -1,7 +1,9 @@
+const container = document.getElementById("container");
 const list = document.getElementById("list");
+
 let itemCount = 0;
 
-// Function to add items
+// Function to add list items
 function addItems(count) {
   for (let i = 0; i < count; i++) {
     itemCount++;
@@ -11,17 +13,17 @@ function addItems(count) {
   }
 }
 
-// Add 10 items by default
+// Add 10 items initially
 addItems(10);
 
-// Infinite scroll logic
-window.addEventListener("scroll", () => {
-  const scrollTop = window.scrollY;
-  const windowHeight = window.innerHeight;
-  const documentHeight = document.documentElement.scrollHeight;
+// Infinite scroll inside container
+container.addEventListener("scroll", () => {
+  const scrollTop = container.scrollTop;
+  const clientHeight = container.clientHeight;
+  const scrollHeight = container.scrollHeight;
 
   // Check if user reached bottom
-  if (scrollTop + windowHeight >= documentHeight - 5) {
+  if (scrollTop + clientHeight >= scrollHeight - 5) {
     addItems(2);
   }
 });
