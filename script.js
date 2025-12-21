@@ -1,29 +1,21 @@
-const container = document.getElementById("container");
 const list = document.getElementById("list");
 
-let itemCount = 0;
+let count = 1;
 
-// Function to add list items
-function addItems(count) {
-  for (let i = 0; i < count; i++) {
-    itemCount++;
-    const li = document.createElement("li");
-    li.textContent = `Item ${itemCount}`;
-    list.appendChild(li);
-  }
+// add initial 10 items
+for (let i = 0; i < 10; i++) {
+  const li = document.createElement("li");
+  li.innerText = "Item " + count++;
+  list.appendChild(li);
 }
 
-// Add 10 items initially
-addItems(10);
-
-// Infinite scroll inside container
-container.addEventListener("scroll", () => {
-  const scrollTop = container.scrollTop;
-  const clientHeight = container.clientHeight;
-  const scrollHeight = container.scrollHeight;
-
-  // Check if user reached bottom
-  if (scrollTop + clientHeight >= scrollHeight - 5) {
-    addItems(2);
+// infinite scroll
+window.addEventListener("scroll", () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+    for (let i = 0; i < 2; i++) {
+      const li = document.createElement("li");
+      li.innerText = "Item " + count++;
+      list.appendChild(li);
+    }
   }
 });
