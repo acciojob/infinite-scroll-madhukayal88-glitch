@@ -1,48 +1,29 @@
-// 1. Array of sound names based exactly on your output image
-const sounds = ['applause', 'boo', 'gasp', 'tada', 'victory', 'wrong'];
+const list = document.getElementById("infi-list");
 
-// 2. Select the container where buttons will be added
-const btnContainer = document.getElementById('buttons');
+// 1. Initial Setup: Add 10 list items by default
+let itemCount = 10;
 
-// 3. Create buttons for each sound effect
-sounds.forEach(sound => {
-    const btn = document.createElement('button');
-    
-    // Requirement: Must have class 'btn'
-    btn.classList.add('btn');
-    
-    // Set the button text to match the sound name
-    btn.innerText = sound;
-
-    // Play sound on click
-    btn.addEventListener('click', () => {
-        stopSongs(); // Stop any currently playing sound
-        document.getElementById(sound).play();
-    });
-
-    btnContainer.appendChild(btn);
-});
-
-// 4. Create the 'stop' button as requested
-const stopBtn = document.createElement('button');
-
-// Requirement: Must have class 'stop'
-stopBtn.classList.add('stop');
-stopBtn.innerText = 'stop';
-
-stopBtn.addEventListener('click', () => {
-    stopSongs();
-});
-
-btnContainer.appendChild(stopBtn);
-
-// 5. Function to stop all audio and reset progress to the beginning
-function stopSongs() {
-    sounds.forEach(sound => {
-        const song = document.getElementById(sound);
-        if (song) {
-            song.pause();
-            song.currentTime = 0; // Reset playback to 0 seconds
-        }
-    });
+function addItems(count) {
+  for (let i = 0; i < count; i++) {
+    const li = document.createElement("li");
+    // Ensure the text matches the video: "Item 1", "Item 2", etc.
+    li.textContent = `Item ${itemCount - 9 + i}`; 
+    list.appendChild(li);
+  }
+  itemCount += count;
 }
+
+// Populate the first 10 items immediately
+addItems(10);
+
+// 2. Functionality: Detect the end of the list
+list.addEventListener("scroll", () => {
+  // Use Math.ceil to handle high-resolution (Retina) screens where scroll values can be decimals
+  const scrollPosition = Math.ceil(list.scrollTop + list.clientHeight);
+  const totalHeight = list.scrollHeight;
+
+  // 3. Add 2 more items automatically when the end is reached
+  if (scrollPosition >= totalHeight) {
+    addItems(2);
+  }
+});
