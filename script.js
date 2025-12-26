@@ -1,27 +1,48 @@
-const list = document.getElementById("infi-list");
+// 1. Array of sound names based exactly on your output image
+const sounds = ['applause', 'boo', 'gasp', 'tada', 'victory', 'wrong'];
 
-// 1. Add 10 items by default
-let itemCount = 10;
-function addItems(count) {
-  for (let i = 0; i < count; i++) {
-    const li = document.createElement("li");
-    li.textContent = `Item ${++itemCount}`;
-    list.appendChild(li);
-  }
-}
+// 2. Select the container where buttons will be added
+const btnContainer = document.getElementById('buttons');
 
-// Initial population
-addItems(10);
+// 3. Create buttons for each sound effect
+sounds.forEach(sound => {
+    const btn = document.createElement('button');
+    
+    // Requirement: Must have class 'btn'
+    btn.classList.add('btn');
+    
+    // Set the button text to match the sound name
+    btn.innerText = sound;
 
-// 2. Infinite Scroll Logic
-list.addEventListener("scroll", () => {
-  // Check if the user has scrolled to the bottom
-  // We use a 5px buffer to ensure it triggers reliably across different browsers
-  const totalHeight = list.scrollHeight;
-  const visibleHeight = list.clientHeight;
-  const scrollPosition = list.scrollTop;
+    // Play sound on click
+    btn.addEventListener('click', () => {
+        stopSongs(); // Stop any currently playing sound
+        document.getElementById(sound).play();
+    });
 
-  if (scrollPosition + visibleHeight >= totalHeight - 5) {
-    addItems(2);
-  }
+    btnContainer.appendChild(btn);
 });
+
+// 4. Create the 'stop' button as requested
+const stopBtn = document.createElement('button');
+
+// Requirement: Must have class 'stop'
+stopBtn.classList.add('stop');
+stopBtn.innerText = 'stop';
+
+stopBtn.addEventListener('click', () => {
+    stopSongs();
+});
+
+btnContainer.appendChild(stopBtn);
+
+// 5. Function to stop all audio and reset progress to the beginning
+function stopSongs() {
+    sounds.forEach(sound => {
+        const song = document.getElementById(sound);
+        if (song) {
+            song.pause();
+            song.currentTime = 0; // Reset playback to 0 seconds
+        }
+    });
+}
