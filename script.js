@@ -1,25 +1,26 @@
-const list = document.getElementById("infi-list");
-
-// Counter to keep track of items
-let itemCount = 0;
-
-// Function to add items to the list
-function addItems(count) {
-  for (let i = 0; i < count; i++) {
-    const li = document.createElement("li");
-    itemCount++;
-    li.textContent = `Item ${itemCount}`;
-    list.appendChild(li);
-  }
+const before_loading = 
+    document.getElementById("content-before-loading");
+before_loading.style.display = "block";
+let c = 0;
+function getInformation() {
+    setTimeout(() => {
+        for (let i = 0; i < 10; i++) {
+            const new_div = document.createElement("div");
+            new_div.className = "sub-block";
+            new_div.innerHTML = `Card ${c}${i}`;
+            before_loading.appendChild(new_div);
+        }
+        c++;
+    }, 1000);
 }
 
-// 1️⃣ Add 10 list items by default
-addItems(10);
-
-// 2️⃣ Detect when user reaches the end of the list
-list.addEventListener("scroll", () => {
-  if (list.scrollTop + list.clientHeight >= list.scrollHeight) {
-    // 3️⃣ Add 2 more items automatically
-    addItems(2);
-  }
+window.addEventListener("scroll", () => {
+    if (
+        document.documentElement.scrollTop +
+        document.documentElement.clientHeight >=
+        document.documentElement.scrollHeight
+    ) {
+        getInformation();
+    }
 });
+getInformation();
