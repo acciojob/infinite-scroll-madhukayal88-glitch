@@ -1,28 +1,27 @@
 const list = document.getElementById("infi-list");
 
-// 1. Initial Setup: Add 10 list items by default
-let itemCount = 10;
+// Start counter from 0
+let itemCount = 0;
 
+// Function to add list items
 function addItems(count) {
   for (let i = 0; i < count; i++) {
     const li = document.createElement("li");
-    // Ensure the text matches the video: "Item 1", "Item 2", etc.
-    li.textContent = `Item ${itemCount - 9 + i}`; 
+    itemCount++;
+    li.textContent = `Item ${itemCount}`;
     list.appendChild(li);
   }
-  itemCount += count;
 }
 
-// Populate the first 10 items immediately
+// 1. Initial Setup: Add 10 items
 addItems(10);
 
-// 2. Functionality: Detect the end of the list
+// 2. Detect end of scroll
 list.addEventListener("scroll", () => {
-  // Use Math.ceil to handle high-resolution (Retina) screens where scroll values can be decimals
   const scrollPosition = Math.ceil(list.scrollTop + list.clientHeight);
   const totalHeight = list.scrollHeight;
 
-  // 3. Add 2 more items automatically when the end is reached
+  // 3. Add 2 more items automatically
   if (scrollPosition >= totalHeight) {
     addItems(2);
   }
