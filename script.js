@@ -1,9 +1,9 @@
 const list = document.getElementById("infi-list");
 
-// Start counter from 0
+// Counter to keep track of items
 let itemCount = 0;
 
-// Function to add list items
+// Function to add items to the list
 function addItems(count) {
   for (let i = 0; i < count; i++) {
     const li = document.createElement("li");
@@ -13,16 +13,13 @@ function addItems(count) {
   }
 }
 
-// 1. Initial Setup: Add 10 items
+// 1️⃣ Add 10 list items by default
 addItems(10);
 
-// 2. Detect end of scroll
+// 2️⃣ Detect when user reaches the end of the list
 list.addEventListener("scroll", () => {
-  const scrollPosition = Math.ceil(list.scrollTop + list.clientHeight);
-  const totalHeight = list.scrollHeight;
-
-  // 3. Add 2 more items automatically
-  if (scrollPosition >= totalHeight) {
+  if (list.scrollTop + list.clientHeight >= list.scrollHeight) {
+    // 3️⃣ Add 2 more items automatically
     addItems(2);
   }
 });
