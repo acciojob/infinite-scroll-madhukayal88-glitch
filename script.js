@@ -1,25 +1,27 @@
 const list = document.getElementById("infi-list");
 
-// Start from 0 so numbering is correct
-let itemCount = 0;
-
-// Function to add items
+// 1. Add 10 items by default
+let itemCount = 10;
 function addItems(count) {
   for (let i = 0; i < count; i++) {
     const li = document.createElement("li");
-    itemCount++;
-    li.textContent = `Item ${itemCount}`;
+    li.textContent = `Item ${++itemCount}`;
     list.appendChild(li);
   }
 }
 
-// 1. Initial Setup: Add 10 items by default
+// Initial population
 addItems(10);
 
-// 2. Functionality: Detect end of scroll
+// 2. Infinite Scroll Logic
 list.addEventListener("scroll", () => {
-  if (list.scrollTop + list.clientHeight >= list.scrollHeight) {
-    // 3. Requirement: Add 2 more items automatically
+  // Check if the user has scrolled to the bottom
+  // We use a 5px buffer to ensure it triggers reliably across different browsers
+  const totalHeight = list.scrollHeight;
+  const visibleHeight = list.clientHeight;
+  const scrollPosition = list.scrollTop;
+
+  if (scrollPosition + visibleHeight >= totalHeight - 5) {
     addItems(2);
   }
 });
